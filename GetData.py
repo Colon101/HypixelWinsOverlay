@@ -28,4 +28,4 @@ class GetBridgeWinsData:
         else:
             return 
 if __name__ == "__main__":
-    bs = GetBridgeWinsData("7b02024f-8f7a-479d-ae5a-f4d3def54d08")
+    bs = GetBridgeWinsData()
