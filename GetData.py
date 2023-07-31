@@ -3,7 +3,6 @@ class GetBridgeWinsData:
     def playernametouuid(self,playername):
         response = requests.get(f"https://api.mojang.com/users/profiles/minecraft/{playername}")
         data = response.json()
-        print("uuid:",data["id"])
         return data["id"]
     def __init__(self,api_key):
         #Checking if api key is valid
@@ -26,6 +25,9 @@ class GetBridgeWinsData:
         if data["success"] == False:
             raise Exception("Bad Username")
         else:
-            return 
+            return data["player"]["achievements"]["duels_bridge_wins"]
 if __name__ == "__main__":
-    bs = GetBridgeWinsData()
+    with open (".apikey.txt","r") as file:
+        apikey = file.read()
+    bs = GetBridgeWinsData(apikey)
+    print("bridgewins for ColonLLC:",bs.GetBridgeWins("ColonLLC"))
