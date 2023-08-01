@@ -1,51 +1,59 @@
-from tkinter import *
+import tkinter as tk
 from GetData import GetBridgeWinsData
 from tkinter import messagebox
 import threading
 import os
+
 class HypixelWinsOverlayGUI:
     def __init__(self):
-        self.window = Tk()
-        self.l1 = Label(self.window,text="Please type your API key")
-        self.l1.pack()
-        self.e1 = Entry(self.window)
-        self.e1.pack()
-        self.b1 = Button(self.window,text="Submit API Key",command=self.run_api_key_submit)
-        self.b1.pack()
+        self.window = tk.Tk()
+        self.window.geometry("300x150")
+        self.api_label = tk.Label(self.window, text="Please type your API key")
+        self.api_label.pack(pady=10)
+        self.api_entry = tk.Entry(self.window)
+        self.api_entry.pack(pady=5)
+        self.api_button = tk.Button(self.window, text="Submit API Key", command=self.run_api_key_submit)
+        self.api_button.pack(pady=5)
+        self.api_valid = False
         self.window.mainloop()
+
     def run_api_key_submit(self):
-        apientry = self.e1.get()
-        self.GBWD = GetBridgeWinsData(apientry)
-        if self.GBWD.ValidApiToken == False:
-            messagebox.showerror("API Key is invalid","API Key is invalid")
+        api_entry = self.api_entry.get()
+        self.GBWD = GetBridgeWinsData(api_entry)
+        if not self.GBWD.ValidApiToken:
+            messagebox.showerror("API Key is invalid", "API Key is invalid")
             os._exit(-1)
-        self.l1.config(text="Enter Your Username")
-        self.e1.delete(0, END)
-        self.b1.config(text="Submit Username",command=self.starthud)
-    def playerhud(self):
-        self.username = self.e1.get()
+        self.api_label.config(text="Enter Your Username")
+        self.api_entry.delete(0, tk.END)
+        self.api_button.config(text="Submit Username", command=self.starthud)
+        self.api_valid = True
+
+    def create_player_hud(self):
+        if not self.api_valid:
+            messagebox.showerror("Error", "Please submit a valid API key first.")
+            return
+
+        self.username = self.api_entry.get()
         try:
             self.GBWD.playernametouuid(self.username)
         except Exception:
-            messagebox.showerror("Couldnt find username")
+            messagebox.showerror("Error", "Couldn't find the username.")
             return
-        self.window2 = Tk()
+
+        self.window2 = tk.Toplevel(self.window)
         self.window2.geometry("400x150")
         self.window2.config(bg="#00b140")
-        self.l2 = Label(self.window2,text=f"Wins: {self.GBWD.GetBridgeWins(self.username)}",font=("Arial",26),fg="white",bg="#00b140")
-        self.l2.pack(pady=35)
+        self.wins_label = tk.Label(self.window2, text="", font=("Arial", 26), fg="white", bg="#00b140")
+        self.wins_label.pack(pady=35)
         self.update_label()
-        self.window2.mainloop()
+
     def update_label(self):
-        print("updating")
-        self.l2.destroy()
-        self.l2 = Label(self.window2,text=f"Wins: {self.GBWD.GetBridgeWins(self.username)}",font=("Arial",26),fg="white",bg="#00b140")
-        self.l2.pack(pady=35)
-        self.l1.pack(pady=35)
-        self.window2.after(6000 * 5, self.update_label)
+        self.wins_label.config(text=f"Wins: {self.GBWD.GetBridgeWins(self.username)}")
+        self.window2.after(600 * 5, self.update_label)
+
     def starthud(self):
-        hudthread = threading.Thread(target=self.playerhud)
-        hudthread.start()
-        
+        hud_thread = threading.Thread(target=self.create_player_hud)
+        hud_thread.start()
+
 if __name__ == "__main__":
     winoverlay = HypixelWinsOverlayGUI()
