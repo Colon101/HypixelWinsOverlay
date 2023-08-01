@@ -3,7 +3,11 @@ class GetBridgeWinsData:
     def playernametouuid(self,playername):
         response = requests.get(f"https://api.mojang.com/users/profiles/minecraft/{playername}")
         data = response.json()
-        return data["id"]
+        if "errorMessage" in data:
+            raise Exception("Invalid username")
+        else:
+            return data["id"]
+        
     def __init__(self,api_key):
         #Checking if api key is valid
         self.api_key = api_key
