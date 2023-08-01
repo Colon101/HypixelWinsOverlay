@@ -29,9 +29,10 @@ class GetBridgeWinsData:
         if data["success"] == False:
             raise Exception("Bad Username")
         else:
+            print("you called this method", data["player"]["achievements"]["duels_bridge_wins"])
             return data["player"]["achievements"]["duels_bridge_wins"]
 if __name__ == "__main__":
     with open (".apikey.txt","r") as file:
         apikey = file.read()
     bs = GetBridgeWinsData(apikey)
-    print("bridgewins for ColonLLC:",bs.GetBridgeWins("ColonLLC"))
+    print("bridgewins for ColonLLC:",bs.GetBridgeWins("colonllc"))
