@@ -7,6 +7,7 @@ import os
 class HypixelWinsOverlayGUI:
     def __init__(self):
         self.window = tk.Tk()
+        self.window.title("Enter API Key")
         self.window.geometry("300x150")
         self.api_label = tk.Label(self.window, text="Please type your API key")
         self.api_label.pack(pady=10)
@@ -19,6 +20,7 @@ class HypixelWinsOverlayGUI:
         self.window.mainloop()
 
     def run_api_key_submit(self):
+        self.window.title("Enter username")
         api_entry = self.api_entry.get()
         self.GBWD = GetBridgeWinsData(api_entry)
         if not self.GBWD.ValidApiToken:
@@ -44,6 +46,7 @@ class HypixelWinsOverlayGUI:
         self.window2 = tk.Toplevel(self.window)
         self.window2.geometry("1000x450")
         self.window2.config(bg="#00b140")
+        self.window2.title(self.username)
         self.wins_label = tk.Label(self.window2, text="", font=("Arial", 26*5), fg="white", bg="#00b140")
         self.wins_label.pack(pady=10)
         self.wins_this_stream_label = tk.Label(self.window2, text="", font=("Arial", 16*5), fg="white", bg="#00b140")
