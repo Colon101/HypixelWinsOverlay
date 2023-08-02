@@ -1,5 +1,5 @@
 import tkinter as tk
-from GetData import GetBridgeWinsData
+from GetData import  GetBridgeData as GetBridgeWinsData
 from tkinter import messagebox
 import threading
 import os
