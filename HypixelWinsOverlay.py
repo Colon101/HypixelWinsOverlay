@@ -42,11 +42,11 @@ class HypixelWinsOverlayGUI:
             return
 
         self.window2 = tk.Toplevel(self.window)
-        self.window2.geometry("400x150")
+        self.window2.geometry("1000x450")
         self.window2.config(bg="#00b140")
-        self.wins_label = tk.Label(self.window2, text="", font=("Arial", 26), fg="white", bg="#00b140")
+        self.wins_label = tk.Label(self.window2, text="", font=("Arial", 26*5), fg="white", bg="#00b140")
         self.wins_label.pack(pady=10)
-        self.wins_this_stream_label = tk.Label(self.window2, text="", font=("Arial", 16), fg="white", bg="#00b140")
+        self.wins_this_stream_label = tk.Label(self.window2, text="", font=("Arial", 16*5), fg="white", bg="#00b140")
         self.wins_this_stream_label.pack()
         self.first_time = self.GBWD.GetBridgeWins(self.username)
         self.update_label()
