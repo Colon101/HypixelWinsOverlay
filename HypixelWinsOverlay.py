@@ -11,6 +11,7 @@ class HypixelWinsOverlayGUI:
         self.api_label = tk.Label(self.window, text="Please type your API key")
         self.api_label.pack(pady=10)
         self.api_entry = tk.Entry(self.window)
+        self.api_entry.insert(tk.END,"0d4cbe68-c39d-474b-9893-597224e30f35")
         self.api_entry.pack(pady=5)
         self.api_button = tk.Button(self.window, text="Submit API Key", command=self.run_api_key_submit)
         self.api_button.pack(pady=5)
@@ -44,12 +45,17 @@ class HypixelWinsOverlayGUI:
         self.window2.geometry("400x150")
         self.window2.config(bg="#00b140")
         self.wins_label = tk.Label(self.window2, text="", font=("Arial", 26), fg="white", bg="#00b140")
-        self.wins_label.pack(pady=35)
+        self.wins_label.pack(pady=10)
+        self.wins_this_stream_label = tk.Label(self.window2, text="", font=("Arial", 16), fg="white", bg="#00b140")
+        self.wins_this_stream_label.pack()
+        self.first_time = self.GBWD.GetBridgeWins(self.username)
         self.update_label()
 
     def update_label(self):
-        self.wins_label.config(text=f"Wins: {self.GBWD.GetBridgeWins(self.username)}")
-        self.window2.after(600 * 5, self.update_label)
+        current_time = self.GBWD.GetBridgeWins(self.username)
+        self.wins_label.config(text=f"Wins: {current_time}")
+        self.wins_this_stream_label.config(text=f"Wins this stream: {current_time-self.first_time}")
+        self.window2.after(6000 * 5, self.update_label)
 
     def starthud(self):
         hud_thread = threading.Thread(target=self.create_player_hud)
