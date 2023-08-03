@@ -51,10 +51,30 @@ class GetBridgeData:
             + data["player"]["stats"]["Duels"].get("bridge_threes_losses", 0)
             + data["player"]["stats"]["Duels"].get("bridge_four_losses", 0)
         )
+    def GetBridgeWinLossRatio(self,username):
+        if self.ValidApiToken == False:
+            raise Exception("Invalid API Token")
+        uuid = self.playernametouuid(username)
+        hypixelURL = f"https://api.hypixel.net/player?key={self.api_key}&uuid={uuid}"
+        response = requests.get(hypixelURL)
+        data = response.json()
+        if data["success"] == False:
+            raise Exception("Bad Username")
+        else:
+            print("you called this method", data["player"]["achievements"]["duels_bridge_wins"])
+        losses = (
+            data["player"]["stats"]["Duels"].get("bridge_duel_losses", 0)
+            + data["player"]["stats"]["Duels"].get("bridge_2v2v2v2_losses", 0)
+            + data["player"]["stats"]["Duels"].get("bridge_3v3v3v3_losses", 0)
+            + data["player"]["stats"]["Duels"].get("bridge_doubles_losses", 0)
+            + data["player"]["stats"]["Duels"].get("bridge_threes_losses", 0)
+            + data["player"]["stats"]["Duels"].get("bridge_four_losses", 0)
+        )
+        wins = data["player"]["achievements"].get("duels_bridge_wins", 0)
+        return round(wins/losses * 10 ) / 10
 if __name__ == "__main__":
     with open (".apikey.txt","r") as file:
         apikey = file.read()
     bs = GetBridgeData(apikey)
-    wins = bs.GetBridgeWins("ColonLLC")
-    losses = bs.GetBridgeLosses("ColonLLC")
-    print("winloss of ColonLLC", wins/losses)
+    winloss = bs.GetBridgeWinLossRatio("ColonLLC")
+    print("winloss of ColonLLC", winloss)
