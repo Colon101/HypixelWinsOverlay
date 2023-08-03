@@ -49,4 +49,4 @@ if __name__ == "__main__":
     bs = GetBridgeData(apikey)
     wins = bs.GetBridgeWins("ColonLLC")
     losses = bs.GetBridgeLosses("ColonLLC")
-    print("winloss of ColonLLC", )
+    print("winloss of ColonLLC", wins/losses)
