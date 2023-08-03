@@ -52,12 +52,15 @@ class HypixelWinsOverlayGUI:
         self.wins_this_stream_label = tk.Label(self.window2, text="", font=("Arial", 16*5), fg="white", bg="#00b140")
         self.wins_this_stream_label.pack()
         self.first_time = self.GBWD.GetBridgeWins(self.username)
+        self.winloss = tk.Label(self.window2, text="", font=("Arial", 14*5), fg="white", bg="#00b140")
+        self.winloss.pack()
         self.update_label()
 
     def update_label(self):
         current_time = self.GBWD.GetBridgeWins(self.username)
         self.wins_label.config(text=f"Wins: {current_time}")
         self.wins_this_stream_label.config(text=f"Wins this stream: {current_time-self.first_time}")
+        self.winloss.config(text=f"WLR: {self.GBWD.GetBridgeWinLossRatio(self.username)}")
         self.window2.after(6000 * 5, self.update_label)
 
     def starthud(self):

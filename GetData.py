@@ -60,8 +60,6 @@ class GetBridgeData:
         data = response.json()
         if data["success"] == False:
             raise Exception("Bad Username")
-        else:
-            print("you called this method", data["player"]["achievements"]["duels_bridge_wins"])
         losses = (
             data["player"]["stats"]["Duels"].get("bridge_duel_losses", 0)
             + data["player"]["stats"]["Duels"].get("bridge_2v2v2v2_losses", 0)
