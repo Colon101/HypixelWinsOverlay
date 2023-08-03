@@ -52,7 +52,7 @@ class HypixelWinsOverlayGUI:
         self.wins_this_stream_label = tk.Label(self.window2, text="", font=("Arial", 16*5), fg="white", bg="#00b140")
         self.wins_this_stream_label.pack()
         self.first_time = self.GBWD.GetBridgeWins(self.username)
-        self.winloss = tk.Label(self.window2, text="", font=("Arial", 14*5), fg="white", bg="#00b140")
+        self.winloss = tk.Label(self.window2, text="", font=("Arial", 12*5), fg="white", bg="#00b140")
         self.winloss.pack()
         self.update_label()
 
