@@ -43,7 +43,14 @@ class GetBridgeData:
             raise Exception("Bad Username")
         else:
             print("you called this method", data["player"]["achievements"]["duels_bridge_wins"])
-            return data["player"]["stats"]["Duels"]["bridge_duel_losses"]
+        return (
+            data["player"]["stats"]["Duels"].get("bridge_duel_losses", 0)
+            + data["player"]["stats"]["Duels"].get("bridge_2v2v2v2_losses", 0)
+            + data["player"]["stats"]["Duels"].get("bridge_3v3v3v3_losses", 0)
+            + data["player"]["stats"]["Duels"].get("bridge_doubles_losses", 0)
+            + data["player"]["stats"]["Duels"].get("bridge_threes_losses", 0)
+            + data["player"]["stats"]["Duels"].get("bridge_four_losses", 0)
+        )
 if __name__ == "__main__":
     with open (".apikey.txt","r") as file:
         apikey = file.read()
