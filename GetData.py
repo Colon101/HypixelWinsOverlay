@@ -47,6 +47,6 @@ if __name__ == "__main__":
     with open (".apikey.txt","r") as file:
         apikey = file.read()
     bs = GetBridgeData(apikey)
-    wins = GetBridgeData.GetBridgeWins("ColonLLC")
-    losses = GetBridgeData.GetBridgeLosses("ColonLLC")
+    wins = bs.GetBridgeWins("ColonLLC")
+    losses = bs.GetBridgeLosses("ColonLLC")
     print("winloss of ColonLLC", )
