@@ -11,8 +11,9 @@ class GetBridgeData:
     def __init__(self,api_key):
         #Checking if api key is valid
         self.api_key = api_key
-        uuid = self.playernametouuid("Hypixel")
+        uuid = self.playernametouuid("ColonLLC")
         api_url = f"https://api.hypixel.net/player?key={api_key}&uuid={uuid}"
+        print(api_url)
         response = requests.get(api_url)
         data = response.json()
         if data["success"] == False:
