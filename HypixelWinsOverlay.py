@@ -61,10 +61,14 @@ class HypixelWinsOverlayGUI:
 
     def update_label(self):
         allinfo = self.GBWD.GetBridgeInfo(self.username)
-        if allinfo[1] - self.first_time[1] != 0:
-            livestream_wlr = round((allinfo[0] - self.first_time[0]) / (allinfo[1] - self.first_time[1]) * 10) / 10
+        wins = allinfo[0] - self.first_time[0]
+        losses = allinfo[0] - self.first_time[0]
+        if wins == 0:
+            winloss = 0
+        elif losses == 0:
+            winloss = wins
         else:
-            livestream_wlr = 0
+            winloss = round(wins/losses * 10 ) / 10
         kills = allinfo[4] - self.first_time[4]
         deaths = allinfo [5] - self.first_time[5]
         if kills == 0:
@@ -75,7 +79,7 @@ class HypixelWinsOverlayGUI:
             kdr = round(kills/deaths * 100) / 100
         self.wins_label.config(text=f"Wins: {allinfo[0]}")
         self.wins_this_stream_label.config(text=f"Wins this stream: {allinfo[0]-self.first_time[0]}")
-        self.winloss.config(text=f"WLR: {allinfo[2]}, Livestream WLR: {livestream_wlr}")
+        self.winloss.config(text=f"WLR: {allinfo[2]}, Livestream WLR: {winloss}")
         self.kdr.config(text=f"KDR: {allinfo[3]} Livestream KDR: {kdr}")
         self.window2.after(6000 * 5, self.update_label)
 
