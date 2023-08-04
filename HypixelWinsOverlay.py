@@ -45,7 +45,7 @@ class HypixelWinsOverlayGUI:
             return
 
         self.window2 = tk.Toplevel(self.window)
-        self.window2.geometry("1000x450")
+        self.window2.geometry("1000x475")
         self.window2.config(bg="#00b140")
         self.window2.title(self.username)
         self.wins_label = tk.Label(self.window2, text="", font=("Arial", 26*5), fg="white", bg="#00b140")
@@ -55,6 +55,8 @@ class HypixelWinsOverlayGUI:
         self.first_time = self.GBWD.GetBridgeInfo(self.username)
         self.winloss = tk.Label(self.window2, text="", font=("Arial", 10*5), fg="white", bg="#00b140")
         self.winloss.pack()
+        self.kdr = tk.Label(self.window2, text="", font=("Arial", 8*5), fg="white", bg="#00b140")
+        self.kdr.pack()
         self.update_label()
 
     def update_label(self):
@@ -63,9 +65,18 @@ class HypixelWinsOverlayGUI:
             livestream_wlr = round((allinfo[0] - self.first_time[0]) / (allinfo[1] - self.first_time[1]) * 10) / 10
         else:
             livestream_wlr = 0
+        kills = allinfo[4] - self.first_time[4]
+        deaths = allinfo [5] - self.first_time[5]
+        if kills == 0:
+            kdr = 0
+        elif deaths == 0:
+            kdr = kills
+        else:
+            kdr = round(kills/deaths * 100) / 100
         self.wins_label.config(text=f"Wins: {allinfo[0]}")
         self.wins_this_stream_label.config(text=f"Wins this stream: {allinfo[0]-self.first_time[0]}")
         self.winloss.config(text=f"WLR: {allinfo[2]}, Livestream WLR: {livestream_wlr}")
+        self.kdr.config(text=f"KDR: {allinfo[3]} Livestream KDR: {kdr}")
         self.window2.after(6000 * 5, self.update_label)
 
     def starthud(self):

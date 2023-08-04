@@ -121,11 +121,11 @@ class GetBridgeData:
         elif deaths == 0:
             kdr = kills
         else:
-            kdr = kills/losses
-        return [wins,losses,winloss,kdr]
+            kdr = round(kills/deaths * 100) / 100
+        return [wins,losses,winloss,kdr,kills,deaths]
 if __name__ == "__main__":
     with open (".apikey.txt","r") as file:
         apikey = file.read()
     bs = GetBridgeData(apikey)
-    winloss = bs.GetBridgeWinLossRatio("ColonLLC")
-    print("winloss of ColonLLC", winloss)
+    winloss = bs.GetBridgeInfo("ColonLLC")
+    print("winloss of ColonLLC", winloss[2])
