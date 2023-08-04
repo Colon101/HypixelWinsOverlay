@@ -69,7 +69,22 @@ class GetBridgeData:
             + data["player"]["stats"]["Duels"].get("bridge_four_losses", 0)
         )
         wins = data["player"]["achievements"].get("duels_bridge_wins", 0)
+        if wins == 0:
+            return 0
+        if losses == 0:
+            losses == 1
         return round(wins/losses * 10 ) / 10
+    def GetKillDeathRatio(self,username):
+        if self.ValidApiToken == False:
+            raise Exception("Invalid API Token")
+        uuid = self.playernametouuid(username)
+        hypixelURL = f"https://api.hypixel.net/player?key={self.api_key}&uuid={uuid}"
+        response = requests.get(hypixelURL)
+        data = response.json()
+        if data["success"] == False:
+            raise Exception("Bad Username")
+        deaths = data["player"]["stats"]["Duels"].get("bridge_deaths", 0)
+        kills = data["player"]["stats"]["Duels"].get("bridge_kills", 0)
     def GetBridgeInfo(self,username):
         if self.ValidApiToken == False:
             raise Exception("Invalid API Token")
