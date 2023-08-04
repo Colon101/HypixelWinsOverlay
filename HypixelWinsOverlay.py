@@ -28,6 +28,7 @@ class HypixelWinsOverlayGUI:
             os._exit(-1)
         self.api_label.config(text="Enter Your Username")
         self.api_entry.delete(0, tk.END)
+        self.api_entry.focus()
         self.api_button.config(text="Submit Username", command=self.starthud)
         self.api_valid = True
 
@@ -51,16 +52,20 @@ class HypixelWinsOverlayGUI:
         self.wins_label.pack(pady=10)
         self.wins_this_stream_label = tk.Label(self.window2, text="", font=("Arial", 16*5), fg="white", bg="#00b140")
         self.wins_this_stream_label.pack()
-        self.first_time = self.GBWD.GetBridgeWins(self.username)
-        self.winloss = tk.Label(self.window2, text="", font=("Arial", 12*5), fg="white", bg="#00b140")
+        self.first_time = self.GBWD.GetBridgeInfo(self.username)
+        self.winloss = tk.Label(self.window2, text="", font=("Arial", 10*5), fg="white", bg="#00b140")
         self.winloss.pack()
         self.update_label()
 
     def update_label(self):
-        current_time = self.GBWD.GetBridgeWins(self.username)
-        self.wins_label.config(text=f"Wins: {current_time}")
-        self.wins_this_stream_label.config(text=f"Wins this stream: {current_time-self.first_time}")
-        self.winloss.config(text=f"WLR: {self.GBWD.GetBridgeWinLossRatio(self.username)}")
+        allinfo = self.GBWD.GetBridgeInfo(self.username)
+        if allinfo[1] - self.first_time[1] != 0:
+            livestream_wlr = round((allinfo[0] - self.first_time[0]) / (allinfo[1] - self.first_time[1]) * 10) / 10
+        else:
+            livestream_wlr = 0
+        self.wins_label.config(text=f"Wins: {allinfo[0]}")
+        self.wins_this_stream_label.config(text=f"Wins this stream: {allinfo[0]-self.first_time[0]}")
+        self.winloss.config(text=f"WLR: {allinfo[2]}, Livestream WLR: {livestream_wlr}")
         self.window2.after(6000 * 5, self.update_label)
 
     def starthud(self):
