@@ -81,7 +81,7 @@ class HypixelWinsOverlayGUI:
         self.wins_this_stream_label.config(text=f"Wins this stream: {allinfo[0]-self.first_time[0]}")
         self.winloss.config(text=f"WLR: {allinfo[2]}, Livestream WLR: {winloss}")
         self.kdr.config(text=f"KDR: {allinfo[3]} Livestream KDR: {kdr}")
-        self.window2.after(6000 * 5, self.update_label)
+        self.window2.after(6000 * 1, self.update_label)
 
     def starthud(self):
         hud_thread = threading.Thread(target=self.create_player_hud)
