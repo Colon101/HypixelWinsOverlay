@@ -22,7 +22,23 @@ app.get('/player/:minecraftusername', (req, res) => {
             axios.get(hypixelAPIRequest)
                 .then(response => {
                     const hypixeldata = response.data
-                    const html = `<html><body><h1>Wins in bridge: ${hypixeldata["player"]["achievements"]["duels_bridge_wins"]}</h1></body></html>`;
+                    const html = `
+<html>
+  <head>
+    <style>
+      body {
+        font-size: 100px; /* Adjust the font size as per your requirement */
+        color: white; /* Set the text color to white */
+        background-color: black; /* Set the background color to black */
+      }
+    </style>
+    <meta http-equiv="refresh" content="5">
+  </head>
+  <body>
+    <h1>Wins in bridge: ${hypixeldata["player"]["achievements"]["duels_bridge_wins"]}</h1>
+  </body>
+</html>`;
+
                     res.send(html);
                 })
                 .catch(error => {
