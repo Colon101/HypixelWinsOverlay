@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>Enter Your Username</header>
+    <form id="redirectForm">
+        <input type="text" id="usernameField" placeholder="Enter your username">
+        <button type="button" onclick="redirectToPlayer()">Submit</button>
+    </form>
+
+    <script>
+        function redirectToPlayer() {
+            const username = document.getElementById("usernameField").value;
+            const redirectTo = `http://localhost:80/player/${encodeURIComponent(username)}`;
+            window.location.href = redirectTo;
+        }
+    </script>
+</body>
+</html>

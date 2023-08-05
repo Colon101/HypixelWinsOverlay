@@ -6,7 +6,7 @@ __pycache__/
 .apikey.txt
 # C extensions
 *.so
-
+./server/node_modules
 # Distribution / packaging
 .Python
 build/
