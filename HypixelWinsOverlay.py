@@ -29,6 +29,7 @@ class HypixelWinsOverlayGUI:
         self.api_label.config(text="Enter Your Username")
         self.api_entry.delete(0, tk.END)
         self.api_entry.focus()
+        self.api_entry.bind("<Return>",self.starthud)
         self.api_button.config(text="Submit Username", command=self.starthud)
         self.api_valid = True
 
@@ -83,7 +84,7 @@ class HypixelWinsOverlayGUI:
         self.kdr.config(text=f"KDR: {allinfo[3]} Livestream KDR: {kdr}")
         self.window2.after(6000 * 1, self.update_label)
 
-    def starthud(self):
+    def starthud(self,event="Weee"):
         hud_thread = threading.Thread(target=self.create_player_hud)
         hud_thread.start()
 
