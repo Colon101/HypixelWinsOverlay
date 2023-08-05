@@ -12,7 +12,7 @@ class HypixelWinsOverlayGUI:
         self.api_label = tk.Label(self.window, text="Please type your API key")
         self.api_label.pack(pady=10)
         self.api_entry = tk.Entry(self.window)
-        self.api_entry.insert(tk.END,"0d4cbe68-c39d-474b-9893-597224e30f35")
+        self.api_entry.insert(tk.END,"002af19e-6259-4f3b-b463-2ccc53dbdc43")
         self.api_entry.pack(pady=5)
         self.api_button = tk.Button(self.window, text="Submit API Key", command=self.run_api_key_submit)
         self.api_button.pack(pady=5)
