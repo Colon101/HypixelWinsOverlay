@@ -23,7 +23,6 @@ app.get('/player/:minecraftusername', (req, res) => {
                 .then(response => {
                     const hypixeldata = response.data
                     const html = `<html><body><h1>Wins in bridge: ${hypixeldata["player"]["achievements"]["duels_bridge_wins"]}</h1></body></html>`;
-                    console.log(hypixeldata["player"]["achievements"]["duels_bridge_wins"]);
                     res.send(html);
                 })
                 .catch(error => {
