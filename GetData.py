@@ -128,4 +128,4 @@ if __name__ == "__main__":
         apikey = file.read()
     bs = GetBridgeData(apikey)
     winloss = bs.GetBridgeInfo("ColonLLC")
-    print("winloss of ColonLLC", winloss[2])
+    print(F"Bridge Games {winloss[0] + winloss[1]}")
