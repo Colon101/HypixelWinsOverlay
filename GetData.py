@@ -1,5 +1,14 @@
 import requests
 class GetBridgeData:
+    def calculate_ratio(self,numerator, denominator, decimal_points=1):
+        try:
+            if denominator == 0:
+                return numerator
+            ratio = numerator / denominator
+            rounded_ratio = round(ratio, 10 ** decimal_points) / 10 ** decimal_points
+            return rounded_ratio
+        except ZeroDivisionError:
+            return 0
     def playernametouuid(self,playername):
         response = requests.get(f"https://api.mojang.com/users/profiles/minecraft/{playername}")
         data = response.json()
@@ -108,20 +117,10 @@ class GetBridgeData:
             + data["player"]["stats"]["Duels"].get("bridge_four_losses", 0)
         )
         wins = data["player"]["achievements"].get("duels_bridge_wins", 0)
-        if wins == 0:
-            winloss = 0
-        elif losses == 0:
-            winloss = wins
-        else:
-            winloss = round(wins/losses * 10 ) / 10
+        winloss = self.calculate_ratio(wins,losses)
         deaths = data["player"]["stats"]["Duels"].get("bridge_deaths", 0)
         kills = data["player"]["stats"]["Duels"].get("bridge_kills", 0)
-        if kills == 0:
-            kdr = 0
-        elif deaths == 0:
-            kdr = kills
-        else:
-            kdr = round(kills/deaths * 100) / 100
+        kdr = self.calculate_ratio(kills,deaths,2)
         return [wins,losses,winloss,kdr,kills,deaths]
 if __name__ == "__main__":
     with open (".apikey.txt","r") as file:

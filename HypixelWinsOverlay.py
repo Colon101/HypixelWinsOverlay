@@ -64,20 +64,10 @@ class HypixelWinsOverlayGUI:
         allinfo = self.GBWD.GetBridgeInfo(self.username)
         wins = allinfo[0] - self.first_time[0]
         losses = allinfo[0] - self.first_time[0]
-        if wins == 0:
-            winloss = 0
-        elif losses == 0:
-            winloss = wins
-        else:
-            winloss = round(wins/losses * 10 ) / 10
+        winloss = self.GBWD.calculate_ratio(wins,losses)
         kills = allinfo[4] - self.first_time[4]
         deaths = allinfo [5] - self.first_time[5]
-        if kills == 0:
-            kdr = 0
-        elif deaths == 0:
-            kdr = kills
-        else:
-            kdr = round(kills/deaths * 100) / 100
+        kdr = self.GBWD.calculate_ratio(kills,deaths,2)
         self.wins_label.config(text=f"Wins: {allinfo[0]}")
         self.wins_this_stream_label.config(text=f"Wins this stream: {allinfo[0]-self.first_time[0]}")
         self.winloss.config(text=f"WLR: {allinfo[2]}, Livestream WLR: {winloss}")
